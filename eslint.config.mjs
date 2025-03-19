@@ -6,6 +6,7 @@ import js from "@eslint/js";
 import typescriptEslintEslintPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import checkFile from "eslint-plugin-check-file";
+import n from "eslint-plugin-n";
 import prettier from "eslint-plugin-prettier";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +23,7 @@ export default [
     plugins: {
       prettier,
       "check-file": checkFile,
+      n,
     },
     rules: {
       "prettier/prettier": "error",
@@ -50,17 +52,16 @@ export default [
           "**/*.{ts,tsx}": "KEBAB_CASE",
         },
         {
-          // ignore the middle extensions of the filename to support filename like bable.config.js or smoke.spec.ts
           ignoreMiddleExtensions: true,
         },
       ],
       "check-file/folder-naming-convention": [
         "error",
         {
-          // all folders within src (except __tests__)should be named in kebab-case
-          "src/**/!(__tests__)": "KEBAB_CASE",
+          "src/**/!^[.*": "KEBAB_CASE",
         },
       ],
+      "n/no-process-env": "error",
     },
   },
   ...compat.extends("plugin:@typescript-eslint/recommended", "prettier").map((config) => ({
